@@ -1,4 +1,3 @@
-
 variable "project_name" { 
   type = string 
 }
@@ -9,6 +8,11 @@ variable "environment" {
 
 variable "location" { 
   type = string 
+}
+
+variable "product" {
+  description = "The name of the product this service bus is for."
+  type        = string
 }
 
 variable "resource_group_name" { 
