@@ -1,8 +1,8 @@
 terraform {
     backend "azurerm" {
-        resource_group_name   = "rgk8s"
+        resource_group_name   = "rgxxx"
         storage_account_name  = "stgacnttf"
-        container_name        = "tfstate-appservice"
-        key                   = "appservice.terraform.tfstate"
+        container_name        = "tfstate-xxxx"
+        key                   = "xxxx.terraform.tfstate"
     }
 }
