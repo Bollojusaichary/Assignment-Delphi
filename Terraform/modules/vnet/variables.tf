@@ -1,31 +1,43 @@
-variable "resource_group_name" {
-  description = "Resource group name"
-  type        = string
-}
-
+# ---------------- METADATA ------------------------
 variable "location" {
-  description = "Azure region"
+  description = "The location/region where the VNet is created."
   type        = string
 }
 
-variable "project_name" {
-  description = "Project name for resource naming"
+variable "location_abbreviation" {
+  description = "The short location name, according to DevOps standards."
+  type        = string
+}
+
+variable "product" {
+  description = "The name of the product this VNet is for."
   type        = string
 }
 
 variable "environment" {
-  description = "Environment name"
+  description = "The environment this VNet resides within."
   type        = string
 }
 
-variable "vnet_address_space" {
-  description = "VNet address space"
-  type        = list(string)
-  default     = ["10.0.0.0/16"]
+variable "tags" {
+  description = "Tags to apply to this resource."
+  type        = map(string)
 }
 
-variable "tags" {
-  description = "Tags to apply to all resources"
-  type        = map(string)
-  default     = {}
+# ---------------- END METADATA ------------------------
+
+# --------------- DEPENDENCIES ------------------------
+variable "resource_group_name" {
+  description = "The name of the resource group to create this VNet in."
+  type        = string
 }
+
+# ------------- END DEPENDENCIES -----------------------
+
+# ---------------- NETWORK CONFIG ----------------------
+
+variable "vnet_address_space" {
+  description = "The network address space of this VNet."
+  type        = list(string)
+}
+# ---------------- END NETWORK CONFIG -------------------
