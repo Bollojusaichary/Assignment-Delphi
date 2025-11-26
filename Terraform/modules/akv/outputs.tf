@@ -1,11 +1,11 @@
-output "name" { 
-value = azurerm_key_vault.this.name 
-}
-
-output "id" { 
-value = azurerm_key_vault.this.id 
+output "id" {
+  value = azurerm_key_vault.keyvault.id
 }
 
 output "vault_uri" {
-value = azurerm_key_vault.this.vault_uri 
+  value = azurerm_key_vault.keyvault.vault_uri
+}
+
+output "keyvault_id" {
+  value = auzrerm.key_vault.keyvault.id
 }
