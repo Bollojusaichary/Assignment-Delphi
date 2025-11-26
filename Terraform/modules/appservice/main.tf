@@ -1,35 +1,58 @@
-resource "azurerm_service_plan" "this" {
-  name                = "plan-${var.project_name}-${var.environment}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  os_type             = "Linux"
-  sku_name            = "P2v3"
-  zone_redundant      = true
+locals {
+  full_name = trimsuffix(join("-", [var.product, var.environment, var.location_abbreviation]), "-")
 }
 
-resource "azurerm_linux_web_app" "this" {
-  name                = "app-${var.project_name}-${var.environment}"
+resource "azurerm_app_service_plan" "example" {
+  count               = var.environment != "prod" ? 1 : 0
+  name                = "asp-${local.full_name}"
   location            = var.location
-  resource_group_name = var.resource_group_name
-  service_plan_id     = azurerm_service_plan.this.id
-
-  site_config {
-    always_on        = true
-    linux_fx_version = "DOTNET|8.0"
-    ftps_state       = "Disabled"
-    http2_enabled    = true
+  resource_group_name = azurerm.resource_group_name.rg.name
+  kind                = "Linux"
+  reserved            = true
+  tags                = merge(var.tags, { service = "asp" })
+  sku {
+    tier = var.asp_tier
+    size = var.asp_size
   }
+}
 
-  https_only = true
-
-  identity {
-    type = "SystemAssigned"
+resource "azurerm_app_service" "app_service" {
+  count               = var.environment != "prod" ? 1 : 0
+  name                = "as-${local.full_name}"
+  location            = var.location
+  resource_group_name = azurerm.resource_group_name.rg.name
+  app_service_plan_id = azurerm_app_service_plan.example[0].id
+  tags                = merge(var.tags, { service = "as" })
+  site_config {
+    linux_fx_version          = "DOTNETCORE|6.0"
+    use_32_bit_worker_process = true
+    ftps_state                = "FtpsOnly"
+    always_on                 = true
   }
 
   app_settings = {
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://${var.acr_login_server}"
-    "DOCKER_REGISTRY_SERVER_USERNAME"     = var.acr_admin_username
-    "DOCKER_REGISTRY_SERVER_PASSWORD"     = var.acr_admin_password
+    "ASPNETCORE_ENVIRONMENT"          = "${lookup(var.environment)}"
+    "BlobConnectionString"            = "${var.storage_conn_string}"
+    "keyVaultName"                    = "xxxxxx-${var.environment}-kv-${var.location_abbreviation}"
+    "TokenKey"                        = "${lookup(var.mock_api_token, var.environment)}"
+    "MD5HashingKey"                   = "&^%^%@#@!*$%!++998+%$"
+    "MuhimbiSoapUri"                  = "http://ocr-${var.environment == "dev" ? "int" : var.environment}-vmss-lb-uaenorth.xxxxx.net:41734/xxxxxx.DocumentConverter.WebService/"
+    "Password"                        = var.password
+    "UserId"                          = "mock"
+    "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = "true"
+    "WEBSITE_RUN_FROM_PACKAGE"        = "1"
   }
+
+  https_only          = true
+  client_cert_enabled = false
+  identity {
+    type         = var.identity_type
+    identity_ids = var.identity_ids
+  }
+}
+
+resource "azurerm_app_service_virtual_network_swift_connection" "webapp_connection" {
+  count          = var.environment != "prod" ? 1 : 0
+  app_service_id = azurerm_app_service.app_service[0].id
+  subnet_id      = var.subnet_id
 }
