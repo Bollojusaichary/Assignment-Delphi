@@ -30,7 +30,7 @@ resource "azurerm_kubernetes_cluster" "this" {
     name           = "prodpool"
     vm_size        = "Standard_D8s_v5"
     zones          = ["1", "2", "3"]
-    enable_auto_scaling = true
+    # enable_auto_scaling = true
     min_count      = 3
     max_count      = 20
     node_count     = 3
@@ -48,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   oms_agent {
-    enabled                    = true
+    # enabled                    = true
     log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
   }
 
