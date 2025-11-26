@@ -1,5 +1,5 @@
 resource "azurerm_container_registry" "this" {
-  name                     = lower("acr${var.project_name}${var.environment}")
+  name                     = lower("acr${var.product}${var.environment}")
   resource_group_name      = var.resource_group_name
   location                 = var.location
   sku                      = "Premium"
@@ -7,7 +7,7 @@ resource "azurerm_container_registry" "this" {
   zone_redundancy_enabled  = true
 
   georeplications {
-    location                = "uaecentral"
+    location                = "uaenorth"
     zone_redundancy_enabled = true
   }
 
