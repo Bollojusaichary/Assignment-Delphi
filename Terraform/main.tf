@@ -67,39 +67,25 @@ module "aks" {
   resource_group_name     = module.resource_group.name
   availability_zones      = [1, 2, 3]
   node_pool_subnet_id     = azurerm_subnet.cluster_node_pool_subnet.id
-  max_pods_per_node       = var.max_pods_per_node
   node_vm_class           = var.vmsize
-  aks_upgrade_hours       = var.aks_upgrade_hours
-  enable_auto_scaling     = var.enable_auto_scaling
-  cluster_channel_upgrade = "stable"
   azure_policy_enabled    = var.azure_policy_enabled
 }
 
 module "aks_resources" {
   source = "modules.phlexglobal.com/devops/aksresources/azure"
 
-  version                  = "1.0.10"
-  location                 = var.location
-  stormforge_client_secret = var.stormforge_client_secret
-  #resource_group_name            = module.resource_group.name
-  node_resource_group = module.aks.node_resource_group
-  is_production       = var.is_production
-  aks_name            = module.aks.name
-  cluster_name        = module.aks.name
-  #aks_version                    = data.azurerm_kubernetes_cluster.aks.kubernetes_version
+  version                        = "1.0.10"
+  location                       = var.location
+  resource_group_name            = module.resource_group.name
+  node_resource_group            = module.aks.node_resource_group
+  aks_name                       = module.aks.name
+  cluster_name                   = module.aks.name
   nginx_ingress_chart_version    = "4.8.2"
   new_relic_bundle_chart_version = "5.0.41" #To support lowDataMode
-  cert_manager_chart_version     = "1.12.2"
   install_nginx_ingress          = var.install_nginx_ingress
-  install_keda                   = var.install_keda
-  stormforge_install_agent       = var.stormforge_install_agent
-  stormforge_install_applier     = var.stormforge_install_applier
   install_cert_manager           = var.install_cert_manager
   install_new_relic_bundle       = var.install_new_relic_bundle
   nginx_ingress_replica_count    = var.nginx_ingress_replica_count
-  new_relic_license_key          = var.new_relic_license_key
-  install_content                = var.install_aks_content
-  developer_security_groups      = var.aks_access_security_groups_oids
 }
 
 module "app_service" {
@@ -115,4 +101,15 @@ module "app_service" {
   storage_conn_string = module.storage_account.connection_string
   identity_type       = ["SystemAssigned", "UserAssigned"]
   identity_ids        = ["${data.azurerm_user_assigned_identity.identity.id}"]
+}
+
+module "subnet" {
+  source = "./modules/subnet"
+  providers = {
+    azurerm.bastion = azurerm.bastion
+  }
+  tags                    = merge(local.tags, { service = "vnet" })
+  environment             = var.environment
+  location                = var.location
+  vnet_cidr_address_space = var.vnet_cidr_address_space
 }
