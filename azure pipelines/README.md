@@ -54,34 +54,33 @@ Click "Create".
 
 # Step 4:  Setup Azure DevOps Project
 
-Open new browser tab → Go to https://dev.azure.com
-Sign in with your Microsoft account
-If no organization:
-Click "Create new organization"
-Choose unique name (e.g., mycompany-devops)
-Click "Continue"
-Create new project:
-Project name: MyApp-CICD
-Visibility: Private
-Version control: Git
-Work item process: Agile
-Click "Create"
+Open new browser tab → Go to https://dev.azure.com ->
+Sign in with your Microsoft account  then go to your organization if you do not have create one ->
+Click "Create new organization" ->
+then Choose a unique name (e.g., myproject-xx) ->
+Click "Continue". ->
+Now Create a new project: -> and give a name for project ->
+Project name: MyApp-CICD -> keep the repo visibility as private ->
+Visibility: Private ->
+Version control: Git -> choose workitem as agile ->
+Work item process: Agile ->
+Click "Create".
 
 # Step 5: Upload code to azure repo
 
-In your Azure DevOps project, click "Repos" in left sidebar
-Click "Initialize" if empty repository
-Push Existing Code
-cd your-dotnet-project
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin https://dev.azure.com/your-organization/MyApp-CICD/_git/MyApp-CICD
-git push -u origin main
+In your Azure DevOps project, click on "Repos" in left sidebar ->
+Click "Initialize" if empty repository ->
+Push Existing Code ->
+cd your-dotnet-project ->
+git init ->
+git add . ->
+git commit -m "Initial commit" ->
+git remote add origin https://dev.azure.com/your-organization/MyApp-CICD/_git/MyApp-CICD ->
+git push -u origin main.
 
 # Step 6: Create Azure Service Connection
 
-In your Azure DevOps project, click "Project Settings" (bottom left corner)
+In your Azure DevOps organization, click "organization Settings" (bottom left corner)
 In left sidebar, click "Service connections" under Pipelines section
 Click "New service connection" button
 Select "Azure Resource Manager"
