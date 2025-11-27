@@ -1,5 +1,5 @@
 locals {
-  full_name = trimsuffix(join("-", [var.product, var.environment, var.location_abbreviation]), "-")
+  full_name = trimsuffix(join("-", [var.environment]), "-")
 }
 
 resource "azurerm_resource_group" "rg" {
