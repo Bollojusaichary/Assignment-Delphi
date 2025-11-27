@@ -1,6 +1,6 @@
 resource "azurerm_container_registry" "this" {
-  name                     = lower("acr${var.product}${var.environment}")
-  resource_group_name      = var.resource_group_name
+  name                     = lower("acr${var.environment}")
+  resource_group_name      = module.resource_group.name
   location                 = var.location
   sku                      = "Premium"
   admin_enabled            = true
