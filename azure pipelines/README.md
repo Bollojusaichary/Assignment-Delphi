@@ -80,63 +80,63 @@ git push -u origin main.
 
 # Step 6: Create Azure Service Connection
 
-In your Azure DevOps organization, click "organization Settings" (bottom left corner)
-In left sidebar, click "Service connections" under Pipelines section
-Click "New service connection" button
-Select "Azure Resource Manager"
-Click "Next"
-Authentication method: Select "Service principal (automatic)"
-Fill in details:
-Subscription: Select your Azure subscription from dropdown
-Resource group: Leave as "All resource groups"
-Service connection name: azure-myapp-connection
-Click "Save"
+In your Azure DevOps project, click "project Settings" (bottom left corner) ->
+In left sidebar, click "Service connections" under Pipelines section ->
+Click "New service connection" button ->
+Select "Azure Resource Manager" ->
+Click "Next" ->
+Authentication method: Select "Service principal (automatic)" ->
+Fill in details: ->
+Subscription: Select your Azure subscription from dropdown ->
+Resource group: Leave as "All resource groups" ->
+Service connection name: azure-myapp-connection ->
+Click "Save".
 
 # Step 7: Verify Service Connection
 
 Back in Service connections list, find your connection
-Click the three dots (...) next to it
-Click "Manage Service Principal"
-Verify it shows "Connected" status
+Click the three dots (...) next to it ->
+Click "Manage Service Principal" ->
+Verify it shows "Connected" status.
 
 # Step 8: Create CI/CD Pipeline
 
 Create Pipeline YAML File
-In your Azure DevOps project, click "Repos"
-Click "+" button next to root folder
-Create new file named azure-pipelines.yml
-Add the cicd-deployment.yaml file.
-Click "Commit" to save the file
+In your Azure DevOps project, click "Repos" ->
+Click "+" button next to root folder ->
+Create new file named azure-pipelines.yml ->
+Add the cicd-deployment.yaml file. ->
+Click "Commit" to save the file.
 
 # Step 9: Create the Pipeline
 
 In Azure DevOps, click "Pipelines" in left sidebar
-Click "New pipeline" button
-Select "Azure Repos Git"
-Select your repository: MyApp-CICD
-Select "Existing Azure Pipelines YAML file"
-Select the path: /azure-pipelines.yml
-Click "Continue"
-Review the pipeline and click "Run"
+Click "New pipeline" button ->
+Select "Azure Repos Git" ->
+Select your repository: MyApp-CICD ->
+Select "Existing Azure Pipelines YAML file" ->
+Select the path: /azure-pipelines.yml ->
+Click "Continue" ->
+Review the pipeline and click "Run".
 
 
 # Step 10: Monitor Pipeline Execution
 
-Go to Azure DevOps → Pipelines
-Click on your pipeline "MyApp-CICD"
-Watch the real-time execution:
-Build stage should show green checkmarks
-Deploy stage should start automatically
-Wait for completion (5-10 minutes)
+Go to Azure DevOps → Pipelines ->
+Click on your pipeline "MyApp-CICD" ->
+Watch the real-time execution: ->
+Build stage should show green checkmarks ->
+Deploy stage should start automatically ->
+Wait for completion (5-10 minutes).
 
 # Step 11: Verify Deployment
 
-Open Azure Portal → App Services
-Click on your app: app-myapp-production
-Click "Overview" in left sidebar
-Copy the URL (e.g., https://app-myapp-production.azurewebsites.net)
-Open new browser tab and paste the URL
-You should see: "website or information from Azure App Service - CI/CD Working!"
+Open Azure Portal → App Services ->
+Click on your app: app-myapp-production ->
+Click "Overview" in left sidebar ->
+Copy the URL (e.g., https://app-myapp-production.azurewebsites.net) ->
+Open new browser tab and paste the URL ->
+You should see: "website or information from Azure App Service - CI/CD Working!".
 
 
 # the end.
