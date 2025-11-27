@@ -8,20 +8,10 @@ variable "location" {
   type        = string
 }
 
-variable "location_abbreviation" {
-  description = "The short location name, according to DevOps standards."
-  type        = string
-}
-
 variable "name_suffix" {
   description = "Optional suffix to append to the service bus name."
   type        = string
   default     = ""
-}
-
-variable "product" {
-  description = "The name of the product this service bus is for."
-  type        = string
 }
 
 variable "environment" {
