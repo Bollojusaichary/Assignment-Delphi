@@ -64,16 +64,9 @@ module "aks" {
   location                = var.location
   environment             = var.environment
   tags                    = merge(local.tags, { service = "aks" })
-  private_cluster_enabled = false
   resource_group_name     = module.resource_group.name
-  is_production           = var.is_production
-  aks_sku_tier            = var.is_production == true ? "Standard" : "Free"
   availability_zones      = [1, 2, 3]
-  enable_auto_upgrades    = var.enable_auto_upgrades
-  aks_upgrade_day         = var.aks_upgrade_day
   node_pool_subnet_id     = azurerm_subnet.cluster_node_pool_subnet.id
-  min_node_count          = var.min_node_count
-  max_node_count          = var.max_node_count
   max_pods_per_node       = var.max_pods_per_node
   node_vm_class           = var.vmsize
   aks_upgrade_hours       = var.aks_upgrade_hours
