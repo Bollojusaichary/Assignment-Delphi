@@ -2,40 +2,47 @@ module "resource_group" {
   source = "./modules/resource_group"
 
   location              = var.location
-  location_abbreviation = var.location_abbreviation
-  product               = var.product
   environment           = var.environment
   tags                  = local.tags
 }
 
-module "key_vault" {
-  source = "./modules/key_vault"
-  vault_resource_name   = var.keyvault_name
-  location              = var.location
-  location_abbreviation = var.location_abbreviation
-  product               = var.product
-  environment           = var.environment
-  tags                  = merge(local.tags, { service = "kv" })
-  access_policy_object_ids = azurerm.key_vault.keyvault.id
 
-module "network" {
-  source = "./modules/network"
+module "keyvault" {
+  source = "./modules/keyvault"
+
+  vault_resource_name       = module.keyvault.name
+  location                  = var.location
+  resource_group_name       = module.resource_group.name
+  environment               = var.environment
+  tags                      = merge(local.tags, { service = "kv" })
+  access_policy_object_ids  = azurerm.key_vault.keyvault.id
+  client_object_id          = var.client_object_id
+  tenant_id                 = var.tenant_id
+}
+
+module "vnet" {
+  source = "./modules/vnet"
   providers = {
     azurerm.bastion = azurerm.bastion
   }
-  tags                  = merge(local.tags, { service = "vnet" })
-  environment           = var.environment
-  product               = var.product
-  location              = var.location
-  location_abbreviation = var.location_abbreviation
-  resource_group_name   = module.resource_group.name
-  vnet_address_space    = [var.vnet_cidr_address_space]
-  subnet_names          = local.subnet_cidr
+  tags                    = merge(local.tags, { service = "vnet" })
+  environment             = var.environment
+  location                = var.location
+  vnet_cidr_address_space = var.vnet_cidr_address_space
+}
+
+
+module "acr" {
+  source = "./modules/ACR"
+
+  location                  = var.location
+  environment               = var.environment
+  aks_kubelet_identity_id   = "ssdf"
 }
 
 # create AKS node pool subnet
 resource "azurerm_subnet" "cluster_node_pool_subnet" {
-  name                 = var.subnet_names
+  name                 = var.sub_net.names
   resource_group_name  = module.resource_group.name
   virtual_network_name = module.network.vnet
   address_prefixes     = [var.cluster_node_subnet]
@@ -48,15 +55,13 @@ resource "azurerm_subnet_network_security_group_association" "cluster_node_pool_
 }
 
 module "aks" {
-  source = "modules.phlexglobal.com/devops/akscluster/azure"
+  source = "./modules.phlexglobal.com/devops/akscluster/azure"
   providers = {
     azurerm.acr = azurerm.acr
   }
 
   version                 = "0.5.3"
   location                = var.location
-  location_abbreviation   = var.location_abbreviation
-  product                 = var.product
   environment             = var.environment
   tags                    = merge(local.tags, { service = "aks" })
   private_cluster_enabled = false
@@ -104,28 +109,17 @@ module "aks_resources" {
   developer_security_groups      = var.aks_access_security_groups_oids
 }
 
-##KUBERNETES RESIURCES
-#CLUSTER-ISSUER
-resource "kubernetes_manifest" "cluster-issuer" {
-  count      = var.install_aks_cluster_issuer ? 1 : 0
-  manifest   = yamldecode(file("${path.module}/cluster-issuer.yaml"))
-  depends_on = [module.aks]
-}
-
 module "app_service" {
   source = "./modules/app_service"
-
-  resource_group_name   = module.resource_group.name
+ 
   location              = var.location
-  location_abbreviation = var.location_abbreviation
-  product               = var.product
   environment           = var.environment
   tags                  = merge(local.tags, { service = "webapp" })
 
-  asp_tier            = var.web_asp_tier
-  asp_size            = var.web_asp_size
+  asp_tier            = var.asp_tier
+  asp_size            = var.asp_size
   subnet_id           = module.network.subnet_id_webapp
   storage_conn_string = module.storage_account.connection_string
-  identity_type       = "SystemAssigned, UserAssigned"
+  identity_type       = ["SystemAssigned", "UserAssigned"]
   identity_ids        = ["${data.azurerm_user_assigned_identity.identity.id}"]
 }
