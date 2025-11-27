@@ -108,8 +108,10 @@ module "subnet" {
   providers = {
     azurerm.bastion = azurerm.bastion
   }
-  tags                    = merge(local.tags, { service = "vnet" })
+  tags                    = merge(local.tags, { service = "subnet" })
   environment             = var.environment
   location                = var.location
+  vnet_name               = module.vnet.name
   vnet_cidr_address_space = var.vnet_cidr_address_space
+  service_endpoints       = ["Microsoft.Web"]
 }
