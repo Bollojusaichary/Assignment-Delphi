@@ -67,7 +67,7 @@ Version control: Git
 Work item process: Agile
 Click "Create"
 
-# Step5: Upload code to azure repo
+# Step 5: Upload code to azure repo
 
 In your Azure DevOps project, click "Repos" in left sidebar
 Click "Initialize" if empty repository
@@ -109,7 +109,7 @@ Create new file named azure-pipelines.yml
 Add the below yaml file.
 Click "Commit" to save the file
 
-
+```
 trigger:
 - main
 
@@ -179,7 +179,7 @@ stages:
               appType: 'webApp'
               appName: '$(webAppName)'
               package: '$(Pipeline.Workspace)/webapp/**/*.zip'
-
+```
 
 # Step 9: Create the Pipeline
 
