@@ -8,10 +8,10 @@ Azure DevOps Account (dev.azure.com)
 Basic Git Knowledge
 
 # Step 1: Create Resource group 
-Create Resource Group
-In Azure portal, click search bar at top
-Type "Resource groups" and select it
-Click "+ Create" button
+Create Resource Group ->
+In Azure portal, click search bar at top ->
+Type "Resource groups" and select it ->
+Click "+ Create" button ->
 Fill in details:
 Subscription: Your subscription
 Resource group: rg-myapp-production
