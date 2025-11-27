@@ -1,16 +1,5 @@
-# ---------------- METADATA ------------------------
 variable "location" {
   description = "The location/region where the VNet is created."
-  type        = string
-}
-
-variable "location_abbreviation" {
-  description = "The short location name, according to DevOps standards."
-  type        = string
-}
-
-variable "product" {
-  description = "The name of the product this VNet is for."
   type        = string
 }
 
@@ -24,20 +13,7 @@ variable "tags" {
   type        = map(string)
 }
 
-# ---------------- END METADATA ------------------------
-
-# --------------- DEPENDENCIES ------------------------
-variable "resource_group_name" {
-  description = "The name of the resource group to create this VNet in."
+variable "vnet_cidr_address_space" {
+  description = "The network address space of this VNet."
   type        = string
 }
-
-# ------------- END DEPENDENCIES -----------------------
-
-# ---------------- NETWORK CONFIG ----------------------
-
-variable "vnet_address_space" {
-  description = "The network address space of this VNet."
-  type        = list(string)
-}
-# ---------------- END NETWORK CONFIG -------------------
