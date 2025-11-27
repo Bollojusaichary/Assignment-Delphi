@@ -4,15 +4,6 @@ variable "location" {
   type        = string
 }
 
-variable "location_abbreviation" {
-  description = "The short location name, according to DevOps standards."
-  type        = string
-}
-
-variable "product" {
-  description = "The name of the product this VNet is for."
-  type        = string
-}
 
 variable "environment" {
   description = "The environment this VNet resides within."
