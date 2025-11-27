@@ -69,32 +69,32 @@ Infrastructure Costs
 
 # Compute Resources
 Resource	SKU	Quantity	Monthly Cost (AED)
-AKS Cluster	Standard_B4ms	3 nodes	1,200
-App Service Plan	P1v2	1 instance	450
-ACR	Premium	1 registry	300
+AKS Cluster	Standard_B4ms	3 nodes	1,200 AED
+App Service Plan	P1v2	1 instance	450 AED
+ACR	Premium	1 registry	300 AED
 
 # Storage
 Resource	Type	Size	Monthly Cost (AED)
-Managed Disks	Premium_LRS	128GB x 3	180
-File Shares	Premium	100GB	120
+Managed Disks	Premium_LRS	128GB x 3	= 180 AED
+File Shares	Premium	100GB	= 120 AED
 
 # Networking
 Resource	Type	Monthly Cost (AED)
-Load Balancer	Standard	150
-VPN Gateway	VpnGw1	600
-Bandwidth	Data Transfer	200
+Load Balancer	Standard	150 AED
+VPN Gateway	VpnGw1	600 AED
+Bandwidth	Data Transfer	200 AED
 
 # Security & Identity
 Resource	Tier	Monthly Cost (AED)
-Key Vault	Standard	120
-Azure AD	P1	40/user
-Security Center	Standard	500
+Key Vault	Standard	120 AED
+Azure AD	P1	40/user 
+Security Center	Standard	500 AED
 
 # Monitoring & Management
 Resource	Tier	Monthly Cost (AED)
-Azure Monitor	Basic	200
-Application Insights	Enterprise	300
-Log Analytics	Per GB	150
+Azure Monitor	Basic	200 AED
+Application Insights	Enterprise	300 AED
+Log Analytics	Per GB	150 AED
 
 
 # Total Estimated Monthly Cost
