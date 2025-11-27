@@ -1,7 +1,7 @@
 resource "azurerm_subnet" "subnet" {
   name                                           = var.subnet_name
-  resource_group_name                            = azurerm.resource_group_name.rg.name
-  virtual_network_name                           = var.virtual_network_name
+  resource_group_name                            = module.resource_group.name
+  virtual_network_name                           = module.virtual_network_name.name
   address_prefixes                               = var.address_prefix
   service_endpoints                              = var.service_endpoints
   # enforce_private_link_endpoint_network_policies = var.enforce_private_link_endpoint
