@@ -12,12 +12,12 @@ Create Resource Group ->
 In Azure portal, click search bar at top ->
 Type "Resource groups" and select it ->
 Click "+ Create" button ->
-Fill in details:
-Subscription: Your subscription
-Resource group: rg-myapp-production
-Region: UAE North
-Click "Review + create"
-Click "Create"
+Fill in details: ->
+Subscription: Your subscription ->
+Resource group: rg-myapp-production ->
+Region: UAE North ->
+Click "Review + create" ->
+Click "Create".
 
 # Step 2: Create Azure App Service plan
 
