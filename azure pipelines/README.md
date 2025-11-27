@@ -106,80 +106,8 @@ Create Pipeline YAML File
 In your Azure DevOps project, click "Repos"
 Click "+" button next to root folder
 Create new file named azure-pipelines.yml
-Add the below yaml file.
+Add the cicd-deployment.yaml file.
 Click "Commit" to save the file
-
-```
-trigger:
-- main
-
-variables:
-  buildConfiguration: 'Release'
-  webAppName: 'your-app-name-$(Build.BuildId)'
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-stages:
-- stage: Build
-  displayName: 'Build Stage'
-  jobs:
-  - job: Build
-    displayName: 'Build .NET App'
-    steps:
-    - task: UseDotNet@2
-      displayName: 'Install .NET 6'
-      inputs:
-        version: '6.0.x'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'Restore Packages'
-      inputs:
-        command: 'restore'
-        projects: '**/*.csproj'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'Build App'
-      inputs:
-        command: 'build'
-        arguments: '--configuration $(buildConfiguration) --no-restore'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish App'
-      inputs:
-        command: 'publish'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: true
-    
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'webapp'
-
-- stage: Deploy
-  displayName: 'Deploy Stage'
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: Deploy
-    displayName: 'Deploy to App Service'
-    environment: 'production'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: webapp
-            
-          - task: AzureWebApp@1
-            displayName: 'Deploy to Azure App Service'
-            inputs:
-              azureSubscription: 'your-azure-connection'
-              appType: 'webApp'
-              appName: '$(webAppName)'
-              package: '$(Pipeline.Workspace)/webapp/**/*.zip'
-```
 
 # Step 9: Create the Pipeline
 
