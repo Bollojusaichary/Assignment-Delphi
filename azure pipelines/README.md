@@ -1,4 +1,4 @@
-# ** Azure DevOps CICD pipeline for .NET application **
+# Azure DevOps CICD pipeline for .NET application
 
 # Prerequisites Checklist
 
