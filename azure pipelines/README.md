@@ -21,35 +21,35 @@ Click "Create".
 
 # Step 2: Create Azure App Service plan
 
-In Azure portal search bar, type "App Service plans"
-Click "+ Create"
-Fill in details:
-Subscription: Your subscription
-Resource group: rg-myapp-production (select from dropdown)
-Name: asp-myapp-production
-Operating System: Linux
-Region: UAE North
-Pricing tier: Click "Change size"
-Select B1 Basic tier
-Click "Apply"
-Click "Review + create"
-Click "Create"
+In Azure portal search bar, type "App Service plans" ->
+Click "+ Create" ->
+Fill in details: ->
+Subscription: Your subscription ->
+Resource group: rg-myapp-production (select from dropdown) ->
+Name: asp-myapp-production ->
+Operating System: Linux ->
+Region: UAE North ->
+Pricing tier: Click "Change size" ->
+Select B1 Basic tier ->
+Click "Apply" ->
+Click "Review + create" ->
+Click "Create".
 
 # Step 3: Create Web App
 
-In Azure portal search bar, type "App Services"
-Click "+ Create"
-Fill in details:
-Subscription: Your subscription
-Resource group: rg-myapp-production
-Name: app-myapp-production (must be unique globally)
-Publish: Code
-Runtime stack: .NET 6
-Operating System: Linux
-Region: UAE North
-App Service Plan: asp-myapp-production
-Click "Review + create"
-Click "Create"
+In Azure portal search bar, type "App Services" ->
+Click "+ Create" ->
+Fill in details: ->
+Subscription: Your subscription ->
+Resource group: rg-myapp-production ->
+Name: app-myapp-production (must be unique globally) ->
+Publish: Code ->
+Runtime stack: .NET 6 ->
+Operating System: Linux ->
+Region: UAE North ->
+App Service Plan: asp-myapp-production ->
+Click "Review + create" ->
+Click "Create".
 
 
 # Step 4:  Setup Azure DevOps Project
