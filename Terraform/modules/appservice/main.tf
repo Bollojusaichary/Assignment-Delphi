@@ -1,12 +1,12 @@
 locals {
-  full_name = trimsuffix(join("-", [var.product, var.environment, var.location_abbreviation]), "-")
+  full_name = trimsuffix(join([var.environment]))
 }
 
 resource "azurerm_app_service_plan" "example" {
   count               = var.environment != "prod" ? 1 : 0
   name                = "asp-${local.full_name}"
   location            = var.location
-  resource_group_name = azurerm.resource_group_name.rg.name
+  resource_group_name = module.resource_group_name
   kind                = "Linux"
   reserved            = true
   tags                = merge(var.tags, { service = "asp" })
@@ -33,10 +33,8 @@ resource "azurerm_app_service" "app_service" {
   app_settings = {
     "ASPNETCORE_ENVIRONMENT"          = "${lookup(var.environment)}"
     "BlobConnectionString"            = "${var.storage_conn_string}"
-    "keyVaultName"                    = "xxxxxx-${var.environment}-kv-${var.location_abbreviation}"
+    "keyVaultName"                    = "xxxxxx-${var.environment}"
     "TokenKey"                        = "${lookup(var.mock_api_token, var.environment)}"
-    "MD5HashingKey"                   = "&^%^%@#@!*$%!++998+%$"
-    "MuhimbiSoapUri"                  = "http://ocr-${var.environment == "dev" ? "int" : var.environment}-vmss-lb-uaenorth.xxxxx.net:41734/xxxxxx.DocumentConverter.WebService/"
     "Password"                        = var.password
     "UserId"                          = "mock"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = "true"
