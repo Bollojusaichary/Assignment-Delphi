@@ -1,5 +1,5 @@
 locals {
-  full_name = trimsuffix(join("-", [var.product, var.environment, var.vault_resource_name, var.location_abbreviation]), "-")
+  full_name = trimsuffix(join("-", [var.environment, var.vault_resource_name]), "-")
 }
 
 # used for getting the current tenant ID
@@ -9,7 +9,7 @@ data "azurerm_client_config" "current" {}
 resource "azurerm_key_vault" "keyvault" {
   name                = local.full_name
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = module.resource_group.name
   sku_name            = "standard"
   tenant_id           = var.tenant_id
   tags                = merge(var.tags, { service = "kv" })
