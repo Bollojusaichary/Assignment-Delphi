@@ -1,11 +1,11 @@
 locals {
-  full_name = trimsuffix(join("-", [var.product, var.environment, "vnet", var.location_abbreviation]), "-")
+  full_name = trimsuffix(join(var.environment,"vnet"))
 }
 
 resource "azurerm_virtual_network" "vnet" {
   name                = local.full_name
-  address_space       = var.vnet_address_space
+  address_space       = var.vnet_cidr_address_space
   location            = var.location
-  resource_group_name = var.resource_group_name.rg.name
+  resource_group_name = module.resource_group.name
   tags                = merge(var.tags, { service = "vnet" })
 }
