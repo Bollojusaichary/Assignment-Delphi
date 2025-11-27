@@ -1,8 +1,3 @@
-variable "resource_group_name" {
-  description = "Resource group name where the vnet exists"
-  type        = string
-}
-
 variable "virtual_network_name" {
   type        = string
   description = "Name of virtual network where subnet will be added"
