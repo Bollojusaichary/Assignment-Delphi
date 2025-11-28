@@ -1,23 +1,21 @@
-resource "azurerm_container_registry" "this" {
-  name                     = lower("acr${var.environment}")
-  resource_group_name      = module.resource_group.name
-  location                 = var.location
-  sku                      = "Premium"
-  admin_enabled            = true
-  zone_redundancy_enabled  = true
-
-  georeplications {
-    location                = "uaenorth"
-    zone_redundancy_enabled = true
-  }
-
-  tags = {
-    Environment = var.environment
-  }
+locals {
+  fullname = "${var.environment}-${var.location}" 
 }
 
-resource "azurerm_role_assignment" "aks_pull" {
-  scope                = azurerm_container_registry.this.id
-  role_definition_name = "AcrPull"
-  principal_id         = var.aks_kubelet_identity_id
+resource "azurerm_container_registry" "acr" {
+  name                = "acr-${local.fullname}"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  sku                 = "Premium"
+  admin_enabled       = false
+  georeplications {
+    location                = "East US"
+    zone_redundancy_enabled = true
+    tags                    = {}
+  }
+  georeplications {
+    location                = "North Europe"
+    zone_redundancy_enabled = true
+    tags                    = {}
+  }
 }
