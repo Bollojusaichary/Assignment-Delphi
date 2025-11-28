@@ -1,11 +1,9 @@
 variable "environment" {
-type = string 
+  type = string
+  description = "this is prod env."
 }
 
-variable "location" { 
-type = string 
-}
-
-variable "acr_id" { 
-type = string 
+variable "location" {
+  type = string
+  description = "this is prod location."
 }
