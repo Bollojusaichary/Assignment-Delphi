@@ -1,11 +1,11 @@
 resource "azurerm_subnet" "subnet" {
-  name                                           = var.subnet_name
-  resource_group_name                            = module.resource_group.name
-  virtual_network_name                           = module.virtual_network_name.name
+  name                                           = var.subnet_names
+  resource_group_name                            = module.resourcegroup.name
+  virtual_network_name                           = module.vnet.name
   address_prefixes                               = var.address_prefix
   service_endpoints                              = var.service_endpoints
-  # enforce_private_link_endpoint_network_policies = var.enforce_private_link_endpoint
-  # enforce_private_link_service_network_policies  = var.enforce_private_link_service
+  enforce_private_link_endpoint_network_policies = var.enforce_private_link_endpoint
+  enforce_private_link_service_network_policies  = var.enforce_private_link_service
 
 
   dynamic "delegation" {
@@ -22,3 +22,4 @@ resource "azurerm_subnet" "subnet" {
     }
   }
 }
+
