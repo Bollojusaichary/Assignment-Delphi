@@ -1,37 +1,76 @@
-variable "virtual_network_name" {
-  type        = string
-  description = "Name of virtual network where subnet will be added"
+variable "aks_nodes_address_prefix" {
+  type = string
+  description = "this is prod vnet address prefix."
 }
 
+variable "app_subnet_address_prefix" {
+  type = string
+  description = "this is prod app service subnet address prefix."
+}
+
+variable "aks_subnet" {
+  type = string
+  description = "this is prod aks subnet address prefix."
+}
+
+variable "subnet_names" {
+  description = "The subnet name where AKS will be linked with"
+  type        = string
+}
+
+variable "app_subnet" {
+  type = string
+  description = "this is prod aks subnet address prefix."
+}
+
+variable "aks_subnet_address_prefix" {
+  type = string
+  description = "this is prod aks subnet address prefix."
+}
+
+variable "private_endpoints" {
+  type = string
+  description = "this is prod aks subnet address prefix."
+}
+
+variable "private_endpoints_prefixes" {
+  type = string
+  description = "this is prod aks subnet address prefix."
+}
+
+
+# Subnet Definition
+
 variable "address_prefix" {
+  description = "The list of CIDR block(s) for the subnet (e.g., ['10.0.1.0/24'])."
   type        = list(string)
-  description = "Specifies the address prefix for the network subnet"
+}
+
+# Configuration Options
+variable "service_endpoints" {
+  description = "A list of service endpoint types to enable (e.g., ['Microsoft.Storage'])."
+  type        = list(string)
+  default     = []
 }
 
 variable "enforce_private_link_endpoint" {
-  description = "Enable or Disable network policies for the private link endpoint on the subnet"
+  description = "Controls Private Endpoint Network Policies (set to false for PE subnets)."
   type        = bool
-  default     = false
+  default     = true
 }
+
 variable "enforce_private_link_service" {
-  description = "Enable or Disable network policies for the private link endpoint on the subnet.Conflicts with enforce_private_link_endpoint and either one is specified and not the both"
+  description = "Controls Private Link Service Network Policies."
   type        = bool
   default     = false
 }
 
-variable "subnet_name" {
-  type        = string
-  description = "Specifies the name for the network subnet"
-}
-
-variable "service_endpoints" {
-  type        = list(string)
-  description = "List of service endpoints to enable on the subnet, e.g. Microsoft.Storage"
-  default     = null
-}
-
+# Delegation
 variable "subnet_delegation" {
-  description = "Configuration delegations on subnet"
-  type        = map(list(any))
-  default     = {}
+  description = "A map defining service delegations for the subnet (e.g., App Service or ACI)."
+  type = map(list(object({
+    name    = string
+    actions = list(string)
+  })))
+  default = {}
 }
