@@ -5,7 +5,3 @@ output "id" {
 output "vault_uri" {
   value = azurerm_key_vault.keyvault.vault_uri
 }
-
-output "keyvault_id" {
-  value = auzrerm.key_vault.keyvault.id
-}
