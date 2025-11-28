@@ -1,19 +1,14 @@
-variable "location" {
-  description = "The location/region where the VNet is created."
-  type        = string
-}
-
 variable "environment" {
-  description = "The environment this VNet resides within."
-  type        = string
+  type = string
+  description = "this is prod env."
 }
 
-variable "tags" {
-  description = "Tags to apply to this resource."
-  type        = map(string)
+variable "location" {
+  type = string
+  description = "this is prod location."
 }
 
-variable "vnet_cidr_address_space" {
-  description = "The network address space of this VNet."
-  type        = string
+variable "vnet_address_space" {
+  type = list(string)
+  description = "this is prod vnet address space."
 }
